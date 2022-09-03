@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="/dmp/js/dmp.js"></script>
+    <script>
+        var uid = '';
+        function submitForm() {
+            // document.getElementById('dmp_api_result').innerHTML = 'Sending Data To API...';
+        }
+
+        function getAPIResponse() {
+            if (DMP.remoteAPIStatus) {
+                console.log("message " + DMP.remoteAPIMessage);
+                console.log(uuidid.response.uuid);
+                uid = uuidid.response.uuid;
+                // succ();
+                // setTimeout(ok, 1000);
+                return true;
+            }
+
+            document.getElementById('dmp_api_result').innerHTML = 'Error: ' + DMP.remoteAPIMessage;
+
+            return false;
+        }
+
+        function getRandomArbitrary(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+
+        function ok() {
+
+
+        }
+
+        function succ() {
+
+        }
+
+        function err() {
+            // let error = document.getElementById('error');
+            // error.style.display = 'none';
+            // console.log('Vvedite korektniy nomer');
+            // return false;
+        }
+        err();
+
+        function test() {
+            let length = 0;
+            let phone_input = document.getElementById('phone-form').value;
+            let error = document.getElementById('error');
+            console.log(phone_input.length);
+
+            if (phone_input.length == 16) {
+                console.log('vse ok');
+                error.style.display = 'none';
+            } else {
+                error.style.display = 'block';
+                console.log('Vvedite korektniy nomer');
+                return false;
+            };
+
+
+            var inputForm = document.getElementById('send-form');
+
+            inputForm.addEventListener("submit", function (event) {
+                if (DMP.remoteAPIStatus) {
+                    return true;
+                }
+
+                event.preventDefault();
+
+                DMP.init(
+                    formID = 'send-form',
+                    localAPIAddr = '/dmp/',
+                    submitFunction = 'submitForm',
+                    callBackFunction = 'getAPIResponse'
+                );
+
+                DMP.send();
+
+
+                return false;
+
+            });
+
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="form">
+
+
+        <form id="send-form" method="POST" onsubmit="return false;">
+
+
+            <input type="hidden" name="first_name" value="first_name" id="name-form" placeholder="Enter your name"
+                required="required">
+            <label class="label-phone">
+
+                <input type="tel" name="phone" class="phone-form" id="phone-form" placeholder="+91(XXXX) XXX-XXX">
+
+            </label>
+            <input type="hidden" id="campaing" name="utm_campaign">
+            <input type="hidden" id="content" name="utm_content">
+            <input type="hidden" id="medium" name="utm_medium">
+            <div class="">
+                <button class="btn-last" onclick="test()" onsubmit="return false;">Continue</button>
+            </div>
+            <p id="dmp_api_result" style="color:#fff; margin-top: 30px;"></p>
+            <p id="error" style="display:none; color: red">Enter corrent number
+            </p>
+        </form>
+    </div>
+</body>
+
+</html>
